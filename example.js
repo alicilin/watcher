@@ -13,7 +13,7 @@ let w = new watcher({
 let obj = w.val();
 
 w.watch(['c.*.x'], ['after'], ['update','delete', 'access', 'create'], (scope, propname, event, action, value, oldValue) => {
-    console.log( scope + ' -- ' + event + ' -- ' + action + ' - ' + propname + ' - ' + value + ' - ' + oldValue);
+    console.log( scope + ' -- ' + event + ' -- ' + action + ' - ' + propname + ' - ' + value + ' - ' + oldValue );
     return false;
 });
 

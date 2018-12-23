@@ -254,7 +254,7 @@ class watcher {
     trigger(eScope, event, propname, action, value, oldValue){
         let r = true;
         this.watchers.forEach((watcher) => {
-            let sr = watcher.scopes.map((wScope) => wScope.exec(eScope) !== null).find(bool => bool) === true;
+            let sr = watcher.scopes.map(wScope => wScope.exec(eScope) !== null).find(bool => bool) === true;
             let ar = watcher.action.indexOf(action) !== -1;
             let er = watcher.event.indexOf(event) !== -1;
             if(sr && ar && er){
