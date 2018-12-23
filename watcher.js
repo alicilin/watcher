@@ -33,6 +33,7 @@ class arrayHandler {
         if(Array.isArray(Reflect.get(target, prop))){
             let a = this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'before', prop, 'access', Reflect.get(target, prop));
             if(a === true){
+                this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'after', prop, 'access', Reflect.get(target, prop));
                 return new Proxy(Reflect.get(target, prop), new arrayHandler(this.scope !== '' ? `${this.scope},${prop}` : prop, this.watcher));
             }
 
@@ -42,6 +43,7 @@ class arrayHandler {
         if(typeof Reflect.get(target, prop) === 'object'){
             let a = this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'before', prop, 'access', Reflect.get(target, prop));
             if(a === true){
+                this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'after', prop, 'access', Reflect.get(target, prop));
                 return new Proxy(Reflect.get(target, prop), new objectHander(this.scope !== '' ? `${this.scope},${prop}` : prop, this.watcher));
             }
 
@@ -50,6 +52,7 @@ class arrayHandler {
 
         let a = this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'before', prop, 'access', Reflect.get(target, prop));
         if(a === true){
+            this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'after', prop, 'access', Reflect.get(target, prop));
             return Reflect.get(target, prop);
         }
 
@@ -133,6 +136,7 @@ class objectHander {
         if(Array.isArray(Reflect.get(target, prop))){
             let a = this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'before', prop, 'access', Reflect.get(target, prop));
             if(a === true){
+                this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'after', prop, 'access', Reflect.get(target, prop));
                 return new Proxy(Reflect.get(target, prop), new arrayHandler(this.scope !== '' ? `${this.scope},${prop}` : prop, this.watcher));
             }
 
@@ -142,6 +146,7 @@ class objectHander {
         if(typeof Reflect.get(target, prop) === 'object'){
             let a = this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'before', prop, 'access', Reflect.get(target, prop));
             if(a === true){
+                this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'after', prop, 'access', Reflect.get(target, prop));
                 return new Proxy(Reflect.get(target, prop), new objectHander(this.scope !== '' ? `${this.scope},${prop}` : prop, this.watcher));
             }
 
@@ -150,6 +155,7 @@ class objectHander {
 
         let a = this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'before', prop, 'access', Reflect.get(target, prop));
         if(a === true){
+            this.watcher.trigger(this.scope !== '' ? `${this.scope},${prop}` : prop, 'after', prop, 'access', Reflect.get(target, prop));
             return Reflect.get(target, prop);
         }
 
@@ -253,7 +259,7 @@ class watcher {
             let er = watcher.event.indexOf(event) !== -1;
             if(sr && ar && er){
                 let answer = watcher.callback(eScope.replace(/,/ig, '.'), propname, event, action, value, oldValue);
-                if(action === 'before' && answer === false){
+                if(event === 'before' && answer === false){
                     r = false;
                 }
             }

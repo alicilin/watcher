@@ -9,11 +9,14 @@ let w = new watcher({
         {x: 'x', y: 'y'}
     ]
 });
+
 let obj = w.val();
 
-w.watch(['c'], ['after'], ['update','delete', 'access', 'create'], (scope, propname, event, action, value, oldValue) => {
+w.watch(['c.*.x'], ['after'], ['update','delete', 'access', 'create'], (scope, propname, event, action, value, oldValue) => {
     console.log( scope + ' -- ' + event + ' -- ' + action + ' - ' + propname + ' - ' + value + ' - ' + oldValue);
-    return true;
+    return false;
 });
 
-console.log(obj);
+let a = obj.c[0].x;
+console.log(a);
+
